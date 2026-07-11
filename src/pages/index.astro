@@ -1,0 +1,96 @@
+---
+import { getCollection } from "astro:content";
+
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+
+import Hero from "@/components/home/Hero.astro";
+import StudySection from "@/components/home/StudySection.astro";
+import ProjectSection from "@/components/home/ProjectSection.astro";
+
+const studies = await getCollection(
+  "study",
+  ({ data }) => !data.draft
+);
+
+const projectEntries = await getCollection(
+  "projects",
+  ({ data }) => !data.draft
+);
+
+const studyLabels: Record<string, string> = {
+  cuda: "CUDA",
+  "gpu-architecture": "GPU Architecture",
+  "sparse-matrix": "Sparse Matrix",
+  "ai-systems": "AI Systems",
+  papers: "Papers",
+};
+
+const projectLabels: Record<string, string> = {
+  "tc-bell": "TC-BELL",
+  "instruction-roofline": "Instruction Roofline",
+  "cuda-experiments": "CUDA Experiments",
+  "spmm-selector": "SpMM Attribute Selector",
+};
+
+const formatName = (slug: string) =>
+  slug
+    .split("-")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+
+const studyCountMap = studies.reduce(
+  (counts, entry) => {
+    const slug = entry.id.split("/")[0];
+    counts[slug] = (counts[slug] ?? 0) + 1;
+    return counts;
+  },
+  {} as Record<string, number>
+);
+
+const projectCountMap = projectEntries.reduce(
+  (counts, entry) => {
+    const slug = entry.id.split("/")[0];
+    counts[slug] = (counts[slug] ?? 0) + 1;
+    return counts;
+  },
+  {} as Record<string, number>
+);
+
+const studyCategories = Object.entries(studyCountMap).map(
+  ([slug, count]) => ({
+    slug,
+    count,
+    name: studyLabels[slug] ?? formatName(slug),
+  })
+);
+
+const projects = Object.entries(projectCountMap).map(([slug, count]) => ({
+  slug,
+  count,
+  name: projectLabels[slug] ?? formatName(slug),
+  description:
+    slug === "tc-bell"
+      ? "Tensor Core-optimized Blocked-ELLPACK SpMM kernel."
+      : slug === "instruction-roofline"
+        ? "Instruction-level GPU performance characterization."
+        : slug === "cuda-experiments"
+          ? "CUDA kernel implementations and optimization experiments."
+          : undefined,
+}));
+---
+
+<Layout>
+  <Header />
+
+  <main id="main-content" class="app-layout">
+    <Hero />
+
+    <StudySection categories={studyCategories} />
+
+    <ProjectSection projects={projects} />
+  </main>
+
+  <Footer />
+</Layout>

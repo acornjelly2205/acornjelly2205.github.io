@@ -1,0 +1,73 @@
+
+---
+import Socials from "@/components/Socials.astro";
+import config from "@/config";
+
+const { socials } = config;
+
+const skills = [
+  "CUDA",
+  "PTX",
+  "Tensor Cores",
+  "GPU Architecture",
+  "Sparse Computing",
+  "Performance Optimization",
+];
+---
+
+<section class="border-border border-b py-12 sm:py-16">
+  <p class="text-accent mb-3 font-semibold tracking-wide">
+    GPU Software Engineer
+  </p>
+
+  <h1 class="text-4xl font-bold tracking-tight sm:text-6xl">
+    Acornjelly
+  </h1>
+
+  <p class="mt-5 max-w-2xl text-lg leading-relaxed opacity-80 sm:text-xl">
+    Building high-performance GPU software for AI and scientific computing.
+  </p>
+
+  <ul class="mt-7 flex flex-wrap gap-2">
+    {
+      skills.map(skill => (
+        <li class="border-border bg-card-bg rounded-full border px-3 py-1 text-sm">
+          {skill}
+        </li>
+      ))
+    }
+  </ul>
+
+  <div class="mt-8 flex flex-wrap gap-3">
+    <a
+      href="https://github.com/acornjelly2205"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="bg-accent text-background rounded-md px-4 py-2 font-semibold hover:opacity-85"
+    >
+      GitHub
+    </a>
+
+    <a
+      href="/resume"
+      class="border-border hover:text-accent rounded-md border px-4 py-2 font-semibold"
+    >
+      Resume
+    </a>
+
+    <a
+      href="/cv"
+      class="border-border hover:text-accent rounded-md border px-4 py-2 font-semibold"
+    >
+      CV
+    </a>
+  </div>
+
+  {
+    socials.length > 0 && (
+      <div class="mt-6">
+        <Socials />
+      </div>
+    )
+  }
+</section>

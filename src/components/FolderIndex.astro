@@ -1,0 +1,108 @@
+
+---
+interface Item {
+  title: string;
+  description: string;
+  href: string;
+  date?: Date;
+}
+
+interface Folder {
+  name: string;
+  items: Item[];
+}
+
+interface Props {
+  folders: Folder[];
+  emptyMessage?: string;
+}
+
+const {
+  folders,
+  emptyMessage = "No posts yet.",
+} = Astro.props;
+---
+
+{
+  folders.length > 0 ? (
+    <div class="space-y-5">
+      {folders.map((folder, index) => (
+        <details
+          class="group border-border overflow-hidden rounded-lg border"
+        >
+          <summary
+            class="hover:bg-accent/5 flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-4"
+          >
+            <div class="flex min-w-0 items-center gap-3">
+              <span
+                aria-hidden="true"
+                class="text-accent inline-block transition-transform group-open:rotate-90"
+              >
+                ▶
+              </span>
+
+              <span aria-hidden="true">📁</span>
+
+              <h2 class="truncate text-xl font-semibold">
+                {folder.name}
+              </h2>
+            </div>
+
+            <span class="shrink-0 text-sm opacity-60">
+              {folder.items.length} {folder.items.length === 1 ? "post" : "posts"}
+            </span>
+          </summary>
+
+          <ul class="border-border border-t px-4 py-2">
+            {folder.items.map(item => (
+              <li class="border-border border-b last:border-b-0">
+                <a
+                  href={item.href}
+                  class="group/item block py-4 ps-8"
+                >
+                  <div class="flex items-start gap-3">
+                    <span aria-hidden="true" class="mt-0.5">
+                      📄
+                    </span>
+
+                    <div class="min-w-0">
+                      <h3 class="group-hover/item:text-accent font-semibold">
+                        {item.title}
+                      </h3>
+
+                      <p class="mt-1 text-sm opacity-75">
+                        {item.description}
+                      </p>
+
+                      {
+                        item.date && (
+                          <time
+                            datetime={item.date.toISOString()}
+                            class="mt-2 block text-xs opacity-55"
+                          >
+                            {item.date.toLocaleDateString("en-US", {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                            })}
+                          </time>
+                        )
+                      }
+                    </div>
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </details>
+      ))}
+    </div>
+  ) : (
+    <p>{emptyMessage}</p>
+  )
+}
+
+
+
+
+

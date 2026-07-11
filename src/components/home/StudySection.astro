@@ -1,0 +1,49 @@
+---
+interface Category {
+  name: string;
+  slug: string;
+  count: number;
+}
+
+interface Props {
+  categories: Category[];
+}
+
+const { categories } = Astro.props;
+---
+
+<section class="border-border border-b py-12">
+  <div class="mb-7 flex items-center justify-between gap-4">
+    <div>
+      <p class="text-accent mb-1 text-sm font-semibold tracking-wide">
+        KNOWLEDGE BASE
+      </p>
+      <h2 class="text-2xl font-bold">Study</h2>
+    </div>
+
+    <a href="/study" class="hover:text-accent font-medium">
+      View all →
+    </a>
+  </div>
+
+  <div class="grid gap-3 sm:grid-cols-2">
+    {
+      categories.map(category => (
+        <a
+          href={`/study#${category.slug}`}
+          class="border-border hover:border-accent group rounded-lg border p-4 transition"
+        >
+          <div class="flex items-center justify-between gap-4">
+            <h3 class="group-hover:text-accent font-semibold">
+              {category.name}
+            </h3>
+
+            <span class="text-sm opacity-60">
+              {category.count} {category.count === 1 ? "post" : "posts"}
+            </span>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+</section>

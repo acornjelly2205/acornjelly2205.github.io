@@ -1,0 +1,91 @@
+---
+import { getCollection } from "astro:content";
+
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Main from "@/components/Main.astro";
+import Footer from "@/components/Footer.astro";
+import config from "@/config";
+import FolderIndex from "@/components/FolderIndex.astro";
+
+
+const entries = await getCollection(
+  "projects",
+  ({ data }) => !data.draft
+);
+
+const projectLabels: Record<string, string> = {
+  "tc-bell": "TC-BELL",
+  "instruction-roofline": "Instruction Roofline",
+  "cuda-experiments": "CUDA Experiments",
+  "spmm-selector": "SpMM Attribute Selector",
+};
+
+const getProjectLabel = (folderName: string) =>
+  projectLabels[folderName] ??
+  folderName
+    .split("-")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+
+const groupedProjects = Object.entries(
+  entries.reduce(
+    (groups, entry) => {
+      const folderName = entry.id.split("/")[0];
+      const projectName = getProjectLabel(folderName);
+
+      if (!groups[projectName]) {
+        groups[projectName] = [];
+      }
+
+      groups[projectName].push(entry);
+
+      return groups;
+    },
+    {} as Record<string, typeof entries>
+  )
+);
+
+for (const [, projectEntries] of groupedProjects) {
+  projectEntries.sort(
+    (a, b) => a.data.order - b.data.order
+  );
+}
+
+const projectFolders = groupedProjects.map(
+  ([projectName, projectEntries]) => ({
+    name: projectName,
+    items: projectEntries.map(entry => ({
+      title: entry.data.title,
+      description: entry.data.description,
+      href: `/projects/${entry.id}/`,
+      date: entry.data.pubDatetime,
+    })),
+  })
+);
+
+---
+
+<Layout
+  title={`Projects | ${config.site.title}`}
+  description="Projects in GPU programming, sparse computing, and performance optimization."
+>
+  <Header />
+
+  <Main class="app-layout" pageTitle="">
+    <header class="mb-10">
+      <h1 class="text-3xl font-bold">Projects</h1>
+
+      <p class="mt-3">
+        Projects in GPU programming, sparse computing, and performance optimization.
+      </p>
+    </header>
+
+    <FolderIndex
+      folders={projectFolders}
+      emptyMessage="No project posts yet."
+    />
+  </Main>
+
+  <Footer />
+</Layout>

@@ -1,0 +1,89 @@
+---
+import { getCollection } from "astro:content";
+
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Main from "@/components/Main.astro";
+import Footer from "@/components/Footer.astro";
+import config from "@/config";
+import FolderIndex from "@/components/FolderIndex.astro";
+
+
+const entries = await getCollection(
+  "study",
+  ({ data }) => !data.draft
+);
+
+const studyLabels: Record<string, string> = {
+  cuda: "CUDA",
+  "gpu-architecture": "GPU Architecture",
+  "sparse-matrix": "Sparse Matrix",
+  "ai-systems": "AI Systems",
+  papers: "Papers",
+};
+
+const getStudyLabel = (folderName: string) =>
+  studyLabels[folderName] ??
+  folderName
+    .split("-")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+
+const groupedStudies = Object.entries(
+  entries.reduce(
+    (groups, entry) => {
+      const folderName = entry.id.split("/")[0];
+      const studyName = getStudyLabel(folderName);
+
+      if (!groups[studyName]) {
+        groups[studyName] = [];
+      }
+
+      groups[studyName].push(entry);
+
+      return groups;
+    },
+    {} as Record<string, typeof entries>
+  )
+);
+
+for (const [, studyEntries] of groupedStudies) {
+  studyEntries.sort(
+    (a, b) => b.data.pubDatetime.getTime() - a.data.pubDatetime.getTime()
+  );
+}
+
+const studyFolders = groupedStudies.map(([studyName, studyEntries]) => ({
+  name: studyName,
+  items: studyEntries.map(entry => ({
+    title: entry.data.title,
+    description: entry.data.description,
+    href: `/study/${entry.id}/`,
+    date: entry.data.pubDatetime,
+  })),
+}));
+
+
+---
+
+<Layout
+  title={`Study | ${config.site.title}`}
+  description="Study notes and resources on GPU programming, sparse computing, and performance optimization."
+>
+  <Header />
+
+  <Main class="app-layout" pageTitle="">
+    <header class="mb-10">
+      <h1 class="text-3xl font-bold">Study</h1>
+
+      <p class="mt-3">
+        Study notes and resources on GPU programming, sparse computing, and performance optimization.
+      </p>
+    </header>
+    <FolderIndex
+      folders={studyFolders}
+      emptyMessage="No study posts yet."
+    />
+  </Main>
+  <Footer />
+</Layout>

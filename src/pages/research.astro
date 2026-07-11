@@ -1,0 +1,42 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Main from "@/components/Main.astro";
+import Footer from "@/components/Footer.astro";
+import config from "@/config";
+---
+
+<Layout
+  title={`Research | ${config.site.title}`}
+  description="Research interests, publications, talks, and ongoing work."
+>
+  <Header />
+
+  <Main class="app-layout" pageTitle="">
+    <header class="mb-10">
+      <h1 class="text-3xl font-bold">Research</h1>
+
+      <p class="mt-3">
+        Research interests, publications, talks, and ongoing work in GPU
+        computing and performance optimization.
+      </p>
+    </header>
+
+    <section class="mb-12">
+      <h2 class="border-border border-b pb-2 text-2xl font-semibold">
+        Research Interests
+      </h2>
+
+      <ul class="mt-4 list-disc space-y-2 pl-6">
+        <li>GPU kernel optimization</li>
+        <li>Sparse matrix computation</li>
+        <li>Tensor Core programming</li>
+        <li>Performance modeling and analysis</li>
+        <li>AI inference acceleration</li>
+      </ul>
+    </section>
+
+  </Main>
+
+  <Footer />
+</Layout>
