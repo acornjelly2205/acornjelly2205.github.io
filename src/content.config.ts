@@ -3,6 +3,7 @@ import { z } from "astro/zod";
 import { glob } from "astro/loaders";
 import config from "@/config";
 
+const contentLanguage = z.enum(["en", "ko"]);
 export const BLOG_PATH = "src/content/posts";
 
 const posts = defineCollection({
@@ -31,6 +32,8 @@ const pages = defineCollection({
     description: z.string().optional(),
     ogImage: z.string().optional(),
     canonicalURL: z.string().optional(),
+    lang: contentLanguage.default("en"),
+    translationKey: z.string().min(1).optional(),
   }),
 });
 
@@ -43,6 +46,8 @@ const study = defineCollection({
     title: z.string(),
     description: z.string(),
     pubDatetime: z.date(),
+    lang: contentLanguage.default("en"),
+    translationKey: z.string().min(1).optional(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
   }),
@@ -57,6 +62,8 @@ const projects = defineCollection({
     title: z.string(),
     description: z.string(),
     pubDatetime: z.date(),
+    lang: contentLanguage.default("en"),
+    translationKey: z.string().min(1).optional(),
     order: z.number().default(0),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
