@@ -35,6 +35,20 @@ export default {
     featured: "Featured",
     recentPosts: "Recent Posts",
     allPosts: "All Posts",
+
+    role: "GPU Software Engineer",
+    introduction:
+      "Building high-performance GPU software for AI and scientific computing.",
+    resume: "Resume",
+    cv: "CV",
+
+    knowledgeBase: "KNOWLEDGE BASE",
+    studyTitle: "Study",
+    featuredWork: "FEATURED WORK",
+    projectsTitle: "Projects",
+    viewAll: "View all",
+    post: "post",
+    posts: "posts",
   },
   footer: {
     copyright: "Copyright",

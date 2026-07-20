@@ -35,6 +35,19 @@ export default {
     featured: "주요 글",
     recentPosts: "최근 글",
     allPosts: "모든 글",
+
+    role: "GPU 소프트웨어 엔지니어",
+    introduction: "AI와 과학 컴퓨팅을 위한 고성능 GPU 소프트웨어를 개발합니다.",
+    resume: "이력서",
+    cv: "CV",
+
+    knowledgeBase: "KNOWLEDGE BASE",
+    studyTitle: "노트",
+    featuredWork: "FEATURED WORK",
+    projectsTitle: "프로젝트",
+    viewAll: "전체 보기",
+    post: "개 글",
+    posts: "개 글",
   },
   footer: {
     copyright: "저작권",

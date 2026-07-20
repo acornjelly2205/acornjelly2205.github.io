@@ -1,4 +1,11 @@
 ---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { useTranslations } from "@/i18n";
+import config from "@/config";
+
+const locale = Astro.currentLocale ?? config.site.lang;
+const t = useTranslations(locale);
+
 interface Project {
   name: string;
   slug: string;
@@ -17,13 +24,13 @@ const { projects } = Astro.props;
   <div class="mb-7 flex items-center justify-between gap-4">
     <div>
       <p class="text-accent mb-1 text-sm font-semibold tracking-wide">
-        FEATURED WORK
+        {t.home.featuredWork}
       </p>
-      <h2 class="text-2xl font-bold">Projects</h2>
+      <h2 class="text-2xl font-bold">{t.home.projectsTitle}</h2>
     </div>
 
     <a href="/projects" class="hover:text-accent font-medium">
-      View all →
+      {t.home.viewAll} →
     </a>
   </div>
 
@@ -31,7 +38,7 @@ const { projects } = Astro.props;
     {
       projects.map(project => (
         <a
-          href={`/projects#${project.slug}`}
+          href={`${getRelativeLocaleUrl(locale, "projects")}#${project.slug}`}
           class="border-border hover:border-accent group rounded-xl border p-5 transition"
         >
           <div class="flex items-start justify-between gap-4">
@@ -40,17 +47,15 @@ const { projects } = Astro.props;
             </h3>
 
             <span class="text-sm whitespace-nowrap opacity-60">
-              {project.count} {project.count === 1 ? "post" : "posts"}
+              {project.count} {project.count === 1 ? t.home.post : t.home.posts}
             </span>
           </div>
 
-          {
-            project.description && (
-              <p class="mt-3 text-sm leading-relaxed opacity-75">
-                {project.description}
-              </p>
-            )
-          }
+          {project.description && (
+            <p class="mt-3 text-sm leading-relaxed opacity-75">
+              {project.description}
+            </p>
+          )}
         </a>
       ))
     }

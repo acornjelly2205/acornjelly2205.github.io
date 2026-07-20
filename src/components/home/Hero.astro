@@ -1,7 +1,10 @@
-
 ---
 import Socials from "@/components/Socials.astro";
 import config from "@/config";
+import { useTranslations } from "@/i18n";
+
+const locale = Astro.currentLocale ?? config.site.lang;
+const t = useTranslations(locale);
 
 const { socials } = config;
 
@@ -17,15 +20,13 @@ const skills = [
 
 <section class="border-border border-b py-12 sm:py-16">
   <p class="text-accent mb-3 font-semibold tracking-wide">
-    GPU Software Engineer
+    {t.home.role}
   </p>
 
-  <h1 class="text-4xl font-bold tracking-tight sm:text-6xl">
-    Acornjelly
-  </h1>
+  <h1 class="text-4xl font-bold tracking-tight sm:text-6xl">Acornjelly</h1>
 
   <p class="mt-5 max-w-2xl text-lg leading-relaxed opacity-80 sm:text-xl">
-    Building high-performance GPU software for AI and scientific computing.
+    {t.home.introduction}
   </p>
 
   <ul class="mt-7 flex flex-wrap gap-2">
@@ -52,14 +53,14 @@ const skills = [
       href="/resume"
       class="border-border hover:text-accent rounded-md border px-4 py-2 font-semibold"
     >
-      Resume
+      {t.home.resume}
     </a>
 
     <a
       href="/cv"
       class="border-border hover:text-accent rounded-md border px-4 py-2 font-semibold"
     >
-      CV
+      {t.home.cv}
     </a>
   </div>
 
