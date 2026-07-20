@@ -100,6 +100,9 @@
 
   /* ===== Code Blocks & Syntax Highlighting ===== */
   .astro-code {
+    font-family:
+      var(--font-google-sans-code), "Cascadia Code", Consolas, monospace;
+
     @apply outline-border flex border bg-(--shiki-light-bg) text-(--shiki-light) [&_span]:text-(--shiki-light);
   }
 
@@ -110,10 +113,21 @@
   /* Styles for Shiki transformers */
   /* https://shiki.style/packages/transformers */
   .astro-code {
-    font-family:
-      var(--font-google-sans-code), "Cascadia Code", Consolas, monospace;
+    .line.diff.add {
+      @apply relative inline-block w-full bg-green-400/20 before:absolute before:-left-3 before:text-green-500 before:content-['+'];
+    }
 
-    @apply outline-border flex border bg-(--shiki-light-bg) text-(--shiki-light) [&_span]:text-(--shiki-light);
+    .line.diff.remove {
+      @apply relative inline-block w-full bg-red-500/20 before:absolute before:-left-3 before:text-red-500 before:content-['-'];
+    }
+
+    .line.highlighted {
+      @apply inline-block w-full bg-slate-400/20;
+    }
+
+    .highlighted-word {
+      @apply border-border rounded-sm border px-0.5 py-px;
+    }
   }
 }
 
