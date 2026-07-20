@@ -1,3 +1,4 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
 @import "tailwindcss";
 @import "./theme.css";
 @import "./typography.css";
@@ -35,4 +36,35 @@
 
 :target {
   scroll-margin-block: 1rem;
+}
+
+/* Korean typography */
+html[lang="ko"] body {
+  font-family:
+    "Pretendard Variable",
+    Pretendard,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Apple SD Gothic Neo",
+    "Noto Sans KR",
+    "Malgun Gothic",
+    sans-serif;
+
+  line-height: 1.75;
+  letter-spacing: -0.012em;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+html[lang="ko"] h1,
+html[lang="ko"] h2,
+html[lang="ko"] h3,
+html[lang="ko"] h4 {
+  letter-spacing: -0.025em;
+  word-break: keep-all;
+}
+
+html[lang="ko"] nav,
+html[lang="ko"] button {
+  letter-spacing: -0.015em;
 }

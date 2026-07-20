@@ -4,7 +4,7 @@ export default {
   nav: {
     home: "홈",
     posts: "글",
-    study: "공부",
+    study: "노트",
     projects: "프로젝트",
     research: "연구",
     tags: "태그",
