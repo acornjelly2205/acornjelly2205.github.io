@@ -29,7 +29,10 @@ const { projects } = Astro.props;
       <h2 class="text-2xl font-bold">{t.home.projectsTitle}</h2>
     </div>
 
-    <a href="/projects" class="hover:text-accent font-medium">
+    <a
+      href={getRelativeLocaleUrl(locale, "study")}
+      class="hover:text-accent font-medium"
+    >
       {t.home.viewAll} →
     </a>
   </div>

@@ -21,6 +21,12 @@ const pathWithoutTrailingSlash =
 
 const currentPath = stripLocale(pathWithoutTrailingSlash, locale);
 
+const alternateLocale: "en" | "ko" = locale === "ko" ? "en" : "ko";
+const alternateLabel = locale === "ko" ? "EN" : "한국어";
+const alternateUrl = getRelativeLocaleUrl(alternateLocale, "");
+
+const showLanguageSwitch = currentPath === "/";
+
 const isActive = (path: string) => {
   const currentPathArray = currentPath.split("/").filter(p => p.trim());
   const pathArray = path.split("/").filter(p => p.trim());
@@ -112,6 +118,23 @@ const isActive = (path: string) => {
             {t.nav.about}
           </a>
         </li>
+        {
+          showLanguageSwitch && (
+            <li class="col-span-2 mt-2 border-t border-border pt-2 sm:mt-0 sm:border-t-0 sm:border-l sm:pt-0 sm:pl-3">
+              <a
+                href={alternateUrl}
+                lang={alternateLocale}
+                hreflang={alternateLocale}
+                aria-label={
+                  locale === "ko" ? "영어 버전으로 전환" : "Switch to Korean"
+                }
+              >
+                {alternateLabel}
+              </a>
+            </li>
+          )
+        }
+
       </ul>
     </nav>
   </div>
