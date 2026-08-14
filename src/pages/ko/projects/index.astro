@@ -11,7 +11,7 @@ import FolderIndex from "@/components/FolderIndex.astro";
 
 const entries = await getCollection(
   "projects",
-  ({ data, id }) => !data.draft && id.startsWith("en/")
+  ({ data, id }) => !data.draft && id.startsWith("ko/")
 );
 
 
@@ -59,7 +59,7 @@ const projectFolders = groupedProjects.map(
     items: projectEntries.map(entry => ({
       title: entry.data.title,
       description: entry.data.description,
-      href: `/projects/${entry.id.replace(/^en\//, "")}/`,
+      href: `/ko/projects/${entry.id.replace(/^ko\//, "")}/`,
       date: entry.data.pubDatetime,
     })),
   })

@@ -11,13 +11,14 @@ import ProjectSection from "@/components/home/ProjectSection.astro";
 
 const studies = await getCollection(
   "study",
-  ({ data }) => !data.draft
+  ({ data, id }) => !data.draft && id.startsWith("en/")
 );
 
 const projectEntries = await getCollection(
   "projects",
-  ({ data }) => !data.draft
+  ({ data, id }) => !data.draft && id.startsWith("en/")
 );
+
 
 const studyLabels: Record<string, string> = {
   cuda: "CUDA",
@@ -42,7 +43,7 @@ const formatName = (slug: string) =>
 
 const studyCountMap = studies.reduce(
   (counts, entry) => {
-    const slug = entry.id.split("/")[0];
+    const slug = entry.id.split("/")[1];
     counts[slug] = (counts[slug] ?? 0) + 1;
     return counts;
   },
@@ -51,7 +52,7 @@ const studyCountMap = studies.reduce(
 
 const projectCountMap = projectEntries.reduce(
   (counts, entry) => {
-    const slug = entry.id.split("/")[0];
+    const slug = entry.id.split("/")[1];
     counts[slug] = (counts[slug] ?? 0) + 1;
     return counts;
   },

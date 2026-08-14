@@ -14,18 +14,19 @@ import config from "@/config";
 export async function getStaticPaths() {
   const entries = await getCollection(
     "study",
-    ({ data }) => !data.draft
+    ({ data, id }) => !data.draft && id.startsWith("en/")
   );
 
   return entries.map(entry => ({
     params: {
-      id: entry.id,
+      id: entry.id.replace(/^en\//, ""),
     },
     props: {
       entry,
     },
   }));
 }
+
 
 interface Props {
   entry: CollectionEntry<"study">;
@@ -43,7 +44,7 @@ const categoryLabels: Record<string, string> = {
   papers: "Papers",
 };
 
-const folderName = entry.id.split("/")[0];
+const folderName = entry.id.split("/")[1];
 
 const category =
   categoryLabels[folderName] ??
@@ -61,7 +62,10 @@ const category =
   <Header />
 
   <Main class="app-layout" pageTitle="">
-    <article class="prose mx-auto max-w-3xl dark:prose-invert">
+    <article
+      data-pagefind-body
+      class="prose mx-auto max-w-3xl dark:prose-invert"
+    >
       <header class="mb-8">
         <p class="text-accent font-medium">
           {category}

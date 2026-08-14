@@ -11,7 +11,7 @@ import FolderIndex from "@/components/FolderIndex.astro";
 
 const entries = await getCollection(
   "study",
-  ({ data, id }) => !data.draft && id.startsWith("en/")
+  ({ data, id }) => !data.draft && id.startsWith("ko/")
 );
 
 const studyLabels: Record<string, string> = {
@@ -58,7 +58,7 @@ const studyFolders = groupedStudies.map(([studyName, studyEntries]) => ({
   items: studyEntries.map(entry => ({
     title: entry.data.title,
     description: entry.data.description,
-    href: `/study/${entry.id.replace(/^en\//, "")}/`,
+    href: `/ko/study/${entry.id.replace(/^ko\//, "")}/`,
     date: entry.data.pubDatetime,
   })),
 }));

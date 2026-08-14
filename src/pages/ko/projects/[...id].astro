@@ -14,12 +14,12 @@ import config from "@/config";
 export async function getStaticPaths() {
   const entries = await getCollection(
     "projects",
-    ({ data, id }) => !data.draft && id.startsWith("en/")
+    ({ data, id }) => !data.draft && id.startsWith("ko/")
   );
 
   return entries.map(entry => ({
     params: {
-      id: entry.id.replace(/^en\//, ""),
+      id: entry.id.replace(/^ko\//, ""),
     },
     props: {
       entry,
@@ -60,9 +60,9 @@ const projectName =
 
   <Main class="app-layout" pageTitle="">
     <article
-      data-pagefind-body
-      class="prose mx-auto max-w-3xl dark:prose-invert"
-    >
+        data-pagefind-body
+        class="prose mx-auto max-w-3xl dark:prose-invert"
+        >
       <header class="mb-8">
         <p class="text-accent font-medium">
           {projectName}
