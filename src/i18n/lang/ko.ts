@@ -50,8 +50,8 @@ export default {
     posts: "개 글",
   },
   footer: {
-    copyright: "저작권",
-    allRightsReserved: "모든 권리 보유.",
+    copyright: "Copyright",
+    allRightsReserved: "All rights reserved.",
   },
   pages: {
     tagTitle: "태그",
