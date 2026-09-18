@@ -2,7 +2,7 @@ import { defineAstroPaperConfig } from "./src/types/config";
 
 export default defineAstroPaperConfig({
   site: {
-    url: "https://example.com/",
+    url: "https://acornjelly2205.github.io/",
     title: "Acornjelly",
     description: "Notes on CUDA, GPU architecture, performance optimization, sparse computing, and AI systems.",
     author: "Acornjelly",
