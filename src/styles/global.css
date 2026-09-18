@@ -68,3 +68,11 @@ html[lang="ko"] nav,
 html[lang="ko"] button {
   letter-spacing: -0.015em;
 }
+
+
+article img {
+  box-sizing: border-box;
+  background-color: #fff;
+  padding: 12px;
+  border-radius: 8px;
+}
